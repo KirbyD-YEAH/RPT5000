@@ -47,16 +47,15 @@ ___
 
 ## Authors
 ___
-<img src="https://github.com/Clay-Rasmussen.png" alt="Profile Picture" width="100" />
-<img src="https://github.com/KirbyD-YEAH.png" alt="Profile Picture" width="100" />
-
-
-**Clay Rasmussen**
-* **Clay's GitHub Profile**: [Clay-Rasmussen](https://github.com/Clay-Rasmussen)
-* **Clay's Email**: [clrasm02@wsc.edu](mailto:clrasm02@wsc.edu)
 
 **Kirby Dunker**
+<img src="https://github.com/KirbyD-YEAH.png" alt="Profile Picture" width="100" />
 * **Kirby's GitHub Profile**: [KirbyD-YEAH](https://github.com/KirbyD-YEAH)
 * **Kirby's Email**: [brdunk02@wsc.edu](mailto:brdunk@wsc.edu)
+
+**Clay Rasmussen**
+<img src="https://github.com/Clay-Rasmussen.png" alt="Profile Picture" width="100" />
+* **Clay's GitHub Profile**: [Clay-Rasmussen](https://github.com/Clay-Rasmussen)
+* **Clay's Email**: [clrasm02@wsc.edu](mailto:clrasm02@wsc.edu)
 
 [Back to the top](#overview)
