@@ -50,9 +50,10 @@
            05  CUSTMAST-EOF-SWITCH     PIC X    VALUE "N".
               88 CUSTMAST-EOF                   VALUE "Y".
            05  FIRST-RECORD-SWITCH     PIC X    VALUE "Y".
-              88 FIRST-RECORD                   VALUE "Y".
+              88 NOT-FIRST-RECORD               VALUE "N".
 
        01  CONTROL-FIELDS.
+           05  OLD-SALESREP-NUMBER     PIC 99.
            05  OLD-BRANCH-NUMBER       PIC 99.
 
        01  PRINT-FIELDS.
@@ -62,6 +63,8 @@
            05  SPACE-CONTROL   PIC S9.
 
        01  TOTAL-FIELDS.
+           05 SALESREP-TOTAL-THIS-YTD PIC S9(6)V99   VALUE ZERO. 
+           05 SALESREP-TOTAL-LAST-YTD PIC S9(6)V99   VALUE ZERO.
            05 BRANCH-TOTAL-THIS-YTD   PIC S9(6)V99   VALUE ZERO.
            05 BRANCH-TOTAL-LAST-YTD   PIC S9(6)V99   VALUE ZERO.
            05 GRAND-TOTAL-THIS-YTD    PIC S9(7)V99   VALUE ZERO.
@@ -89,9 +92,10 @@
            05  FILLER          PIC X(1)    VALUE "/".
            05  HL1-YEAR        PIC 9(4).
            05  FILLER          PIC X(16)   VALUE SPACE.
-           05  FILLER     PIC X(25)   VALUE "YEAR-TO-DATE SALES REPORT".
-           05  FILLER          PIC X(23) VALUE SPACE.
-           05  FILLER          PIC X(6)   VALUE "PAGE: ".
+           05  FILLER          PIC X(20)   VALUE "YEAR-TO-DATE SALES R".
+           05  FILLER          PIC X(5)    VALUE "EPORT".
+           05  FILLER          PIC X(23)   VALUE SPACE.
+           05  FILLER          PIC X(6)    VALUE "PAGE: ".
            05  HL1-PAGE-NUMBER PIC ZZZ9.
 
        01  HEADING-LINE-2.
@@ -143,7 +147,7 @@
            05  FILLER              PIC X(1)    VALUE SPACE.
            05  CL-BRANCH-NUMBER    PIC X(2).
            05  FILLER              PIC X(6)    VALUE SPACE.
-           05  CL-SALESREP-NUMBER  PIC 9(2).
+           05  CL-SALESREP-NUMBER  PIC X(2).
            05  FILLER              PIC X(3)    VALUE SPACE.
            05  CL-CUSTOMER-NUMBER  PIC 9(5).
            05  FILLER              PIC X(2)    VALUE SPACE.
@@ -158,6 +162,18 @@
            05  CL-CHANGE-PERCENT   PIC ZZ9.9-.
            05  FILLER              PIC X(47)   VALUE SPACE.
 
+       01  SALESREP-TOTAL-LINE.
+           05  FILLER              PIC X(23)   VALUE SPACE.
+           05  FILLER              PIC X(14)   VALUE "SALESREP TOTAL".
+           05  STL-SALES-THIS-YTD  PIC ZZZ,ZZ9.99-.
+           05  FILLER              PIC X(3)    VALUE SPACE.
+           05  STL-SALES-LAST-YTD  PIC ZZZ,ZZ9.99-.
+           05  FILLER              PIC X(3)    VALUE SPACE.
+           05  STL-CHANGE-AMOUNT   PIC ZZZ,ZZ9.99-.
+           05  FILLER              PIC X(3)    VALUE SPACE.
+           05  STL-CHANGE-PERCENT  PIC ZZ9.9-.
+           05  FILLER              PIC X(47)   VALUE "*".
+
        01  BRANCH-TOTAL-LINE.
            05  FILLER              PIC X(23)   VALUE SPACE.
            05  FILLER              PIC X(14)   VALUE "BRANCH TOTAL".
@@ -168,7 +184,7 @@
            05  BTL-CHANGE-AMOUNT   PIC ZZZ,ZZ9.99-.
            05  FILLER              PIC X(3)    VALUE SPACE.
            05  BTL-CHANGE-PERCENT  PIC ZZ9.9-.
-           05  FILLER              PIC X(47)   VALUE " *".
+           05  FILLER              PIC X(47)   VALUE "**".
 
        01  GRAND-TOTAL-LINE-1.
            05  FILLER              PIC X(23)   VALUE SPACE.
@@ -181,7 +197,7 @@
            05  FILLER              PIC X(10)   VALUE ALL "=".
            05  FILLER              PIC X(4)    VALUE SPACE.
            05  FILLER              PIC X(7)    VALUE ALL "=".
-           05  FILLER              PIC X(47)   VALUE " **".
+           05  FILLER              PIC X(47)   VALUE "***".
 
        01  GRAND-TOTAL-LINE-2.
            05  FILLER              PIC X(41)   VALUE SPACE.
@@ -193,6 +209,7 @@
            05  FILLER              PIC X(4)    VALUE SPACE.
            05  GTL-CHANGE-PERCENT  PIC ZZ9.9-.
            05  FILLER              PIC X(37)   VALUE SPACE.
+           05  FILLER              PIC X(47)   VALUE "***".
 
        01  DASH-SEPARATOR-LINE.
            05  FILLER PIC X(130) VALUE ALL "-".
@@ -220,7 +237,7 @@
        300-PREPARE-SALES-LINES.
            PERFORM 310-READ-CUSTOMER-RECORD.
            IF NOT CUSTMAST-EOF
-              IF FIRST-RECORD
+              IF NOT-FIRST-RECORD
                  PERFORM 320-PRINT-CUSTOMER-LINE
                  MOVE "N" TO FIRST-RECORD-SWITCH
                  MOVE CM-BRANCH-NUMBER TO OLD-BRANCH-NUMBER
@@ -242,7 +259,7 @@
        320-PRINT-CUSTOMER-LINE.
            IF LINE-COUNT > LINES-ON-PAGE
               PERFORM 330-PRINT-HEADING-LINES.
-           IF FIRST-RECORD
+           IF NOT-FIRST-RECORD
               MOVE CM-BRANCH-NUMBER TO CL-BRANCH-NUMBER
            ELSE
               IF CM-BRANCH-NUMBER > OLD-BRANCH-NUMBER
