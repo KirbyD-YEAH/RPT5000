@@ -4,7 +4,7 @@
       *****************************************************************
       *  Programmers: Clay Rasmussen and Kirby Dunker
       *  Date.......: March XX, 2025
-      *  GitHub URL.: https://github.com/Clay-Rasmussen/RPT5000
+      *  GitHub URL.: https://github.com/KirbyD-YEAH/RPT5000
       *  Description: This program reads a customer master file and
       *  produces a year-to-date sales report by branch.
       *  It calculates sales changes (amount and percent),
@@ -48,7 +48,9 @@
        WORKING-STORAGE SECTION.
        01  SWITCHES.
            05  CUSTMAST-EOF-SWITCH     PIC X    VALUE "N".
+              88 CUSTMAST-EOF                   VALUE "Y".
            05  FIRST-RECORD-SWITCH     PIC X    VALUE "Y".
+              88 FIRST-RECORD                   VALUE "Y".
 
        01  CONTROL-FIELDS.
            05  OLD-BRANCH-NUMBER       PIC 99.
@@ -201,7 +203,7 @@
                 OUTPUT OUTPUT-RPT5000.
            PERFORM 100-FORMAT-REPORT-HEADING.
            PERFORM 300-PREPARE-SALES-LINES
-               UNTIL CUSTMAST-EOF-SWITCH = "Y".
+               UNTIL CUSTMAST-EOF.
            PERFORM 500-PRINT-GRAND-TOTALS.
            CLOSE INPUT-CUSTMAST
                  OUTPUT-RPT5000.
@@ -217,8 +219,8 @@
 
        300-PREPARE-SALES-LINES.
            PERFORM 310-READ-CUSTOMER-RECORD.
-           IF CUSTMAST-EOF-SWITCH = "N"
-              IF FIRST-RECORD-SWITCH = "Y"
+           IF NOT CUSTMAST-EOF
+              IF FIRST-RECORD
                  PERFORM 320-PRINT-CUSTOMER-LINE
                  MOVE "N" TO FIRST-RECORD-SWITCH
                  MOVE CM-BRANCH-NUMBER TO OLD-BRANCH-NUMBER
@@ -235,12 +237,12 @@
        310-READ-CUSTOMER-RECORD.
            READ INPUT-CUSTMAST
               AT END
-                 MOVE "Y" TO CUSTMAST-EOF-SWITCH.
+                 SET CUSTMAST-EOF TO TRUE.
 
        320-PRINT-CUSTOMER-LINE.
            IF LINE-COUNT > LINES-ON-PAGE
               PERFORM 330-PRINT-HEADING-LINES.
-           IF FIRST-RECORD-SWITCH = "Y"
+           IF FIRST-RECORD
               MOVE CM-BRANCH-NUMBER TO CL-BRANCH-NUMBER
            ELSE
               IF CM-BRANCH-NUMBER > OLD-BRANCH-NUMBER
