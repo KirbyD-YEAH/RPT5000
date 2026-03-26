@@ -3,21 +3,38 @@ ___
 
 ## Overview
 ___
-The **RPT5000** program is an enhanced COBOL reporting tool. ADDME.
+The RPT5000 program is an enhanced COBOL reporting tool designed to process customer sales data and generate a structured, year-to-date 
+sales report organized by branch and sales representative.
 
-Building upon the foundations of its predecessor (RPT3000), this version introduces ADDME
-
-### Key Functionalities
-ADDME
+Building upon the foundations of its predecessor (RPT3000), this version introduces control break processing, detailed sales comparisons, 
+and formatted report output with pagination. It provides a clear summary of sales performance, including calculated changes in both dollar 
+amount and percentage.
 
 ## Table of Contents
 ___
+* [Key Functionalities](#key-functionalities)
 * [Tech Stack](#tech-stack)
 * [Installation](#installation)
 * [Running Output](#running-output)
 * [Learning Outcomes](#learning-outcomes)
 * [Help](#help)
 * [Authors](#authors)
+
+### Key Functionalities
+___
+ * Reads and processes a fixed-format customer master file
+ * Groups data by branch and sales representative using control breaks
+ * Calculates:
+   * Year-to-date sales (current vs. previous year)
+   * Sales change amount
+   * Sales change percentage
+ * Prints:
+   * Individual customer detail lines
+   * Sales representative totals
+   * Branch totals
+   * Grand totals for the entire report
+ * Handles pagination with headers including date, time, and page number
+ * Formats output into a clean, readable report layout
 
 ## Tech Stack
 ___
@@ -35,12 +52,15 @@ ___
 ![Code Running](assets/CodeRunning1.png)
 ![Code Running 2](assets/CodeRunning2.png)
 
-
 ## Learning Outcomes
 ___
-
-ADDME
-
+ * Gained experience with COBOL file handling (sequential file processing)
+ * Implemented control break logic for grouped reporting
+ * Practiced data formatting and report generation in a legacy language
+ * Applied arithmetic operations for business calculations (percent change, totals)
+ * Improved understanding of modular programming using structured paragraphs
+ * Developed skills in debugging and testing batch-style programs
+  
 ## Help
 ___
 * Make sure compiler is running correctly.
@@ -49,7 +69,6 @@ ___
 
 ## Authors
 ___
-
 **Kirby Dunker**
 
 <img src="https://github.com/KirbyD-YEAH.png" alt="Profile Picture" width="100" />
