@@ -47,7 +47,10 @@ ___
 1. Clone the repository to your local machine. (or just steal my code)
 2. Put the code into VS Code in your mainframe of choice
 
-
+## Running Output
+___
+![Code Running](assets/CodeRunning1.png)
+![Code Running 2](assets/CodeRunning2.png)
 
 ## Learning Outcomes
 ___
