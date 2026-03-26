@@ -48,7 +48,7 @@ ___
 2. Put the code into VS Code in your mainframe of choice
 
 ## Running Output
-___
+____
 ![Code Running](assets/CodeRunning1.png)
 ![Code Running 2](assets/CodeRunning2.png)
 
