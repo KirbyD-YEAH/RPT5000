@@ -32,7 +32,7 @@ ___
 
 ## Running Output
 ___
-![Code Running](assets/CodeRunning.png)
+![Code Running](assets/CodeRunning1.png)
 ![Code Running 2](assets/CodeRunning2.png)
 
 
