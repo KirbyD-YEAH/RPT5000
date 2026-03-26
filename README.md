@@ -32,7 +32,9 @@ ___
 
 ## Running Output
 ___
-ADDME
+(assets/CodeRunning.png)
+(assets/CodeRunning2.png)
+
 
 ## Learning Outcomes
 ___
