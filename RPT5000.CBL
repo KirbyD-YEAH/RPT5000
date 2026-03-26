@@ -254,7 +254,7 @@
               WHEN CUSTMAST-EOF
                 PERFORM 355-PRINT-SALESREP-LINE
                 PERFORM 360-PRINT-BRANCH-LINE
-           WHEN NOT-FIRST-RECORD
+           WHEN FIRST-RECORD-SWITCH = "Y"
               PERFORM 320-PRINT-CUSTOMER-LINE
               MOVE "N" TO FIRST-RECORD-SWITCH
               MOVE CM-SALESREP-NUMBER TO OLD-SALESREP-NUMBER
@@ -313,8 +313,8 @@
            MOVE CUSTOMER-LINE TO PRINT-AREA.
            PERFORM 350-WRITE-REPORT-LINE.
            MOVE 1 TO SPACE-CONTROL.
-           ADD CM-SALES-THIS-YTD TO BRANCH-TOTAL-THIS-YTD.
-           ADD CM-SALES-LAST-YTD TO BRANCH-TOTAL-LAST-YTD.
+           ADD CM-SALES-THIS-YTD TO SALESREP-TOTAL-THIS-YTD.
+           ADD CM-SALES-LAST-YTD TO SALESREP-TOTAL-LAST-YTD.
 
       * This paragraph handles page breaks and prints the report 
       * headings. It increments the page number, prints all heading 
